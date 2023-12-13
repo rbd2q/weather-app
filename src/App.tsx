@@ -1,26 +1,21 @@
-import { WeatherPage } from './pages/weather-page';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { useRef } from 'react';
+
+import { WeatherPage } from './pages/weather-page';
 
 const App = () => {
-  const queryClientRef = useRef<QueryClient>();
-
-  if (!queryClientRef.current) {
-    queryClientRef.current = new QueryClient({
-      defaultOptions: {
-        queries: {
-          retry: false,
-          refetchOnWindowFocus: false
-        }
+  const queryClient: QueryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        refetchOnWindowFocus: false,
+        keepPreviousData: true
       }
-    });
-  }
+    }
+  });
 
   return (
-    <QueryClientProvider client={queryClientRef.current}>
-      <div>
-        <WeatherPage />
-      </div>
+    <QueryClientProvider client={queryClient}>
+      <WeatherPage />
     </QueryClientProvider>
   );
 };

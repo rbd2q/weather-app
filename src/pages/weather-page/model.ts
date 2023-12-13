@@ -33,7 +33,7 @@ const normalizeCityInfo = (data: LocationType[]): NormalizedLocationType => ({
 export const useGetForecast = (
   latitude: number | undefined,
   longitude: number | undefined,
-  units: UnitsType = 'metric'
+  units: UnitsType
 ): UseQueryResult<NormalizedWeatherData> => {
   const api = useApi();
   const excludedParts = 'alerts,daily,hourly,minutely';

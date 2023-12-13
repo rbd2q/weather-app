@@ -28,6 +28,6 @@ export const WeatherControllers: FC<Props> = ({
       handleGetMyLocation={handleGetMyLocation}
       isLoading={isLoading}
     />
-    <UnitsSwitcher activeUnits={units} onChangeUnits={onChangeUnits} />
+    <UnitsSwitcher activeUnits={units} onChangeUnits={onChangeUnits} isLoading={isLoading} />
   </div>
 );

@@ -6,11 +6,16 @@ import { useGetCityInfo, useGetForecast } from '@/pages/weather-page/model';
 import { UnitsType } from '@/shared/types';
 import { WeatherControllers } from '@/widgets/weather-controllers';
 
+// const rainColor = '#2c5b94';
+
 export const WeatherPage = () => {
   const [currentLatitude, setCurrentLatitude] = useState<number>();
   const [currentLongitude, setCurrentLongitude] = useState<number>();
   const [selectedCity, setSelectedCity] = useState<string>(localStorage.getItem('selected-city'));
   const [units, setUnits] = useState<UnitsType>('metric');
+
+  const cityInfo = useGetCityInfo(selectedCity, currentLatitude, currentLongitude);
+  const weatherInfo = useGetForecast(cityInfo.data?.latitude, cityInfo.data?.longitude, units);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -18,9 +23,6 @@ export const WeatherPage = () => {
       setCurrentLongitude(position.coords.longitude);
     });
   }, []);
-
-  const cityInfo = useGetCityInfo(selectedCity, currentLatitude, currentLongitude);
-  const weatherInfo = useGetForecast(cityInfo.data?.latitude, cityInfo.data?.longitude, units);
 
   const handleChangeUnits = (units: UnitsType) => {
     setUnits(units);
@@ -43,20 +45,20 @@ export const WeatherPage = () => {
         onChangeUnits={handleChangeUnits}
         onFormSubmit={handleChangeCity}
         handleGetMyLocation={handleShowMyLocation}
-        isLoading={cityInfo.isLoading || weatherInfo.isLoading}
+        isLoading={cityInfo.isLoading}
       />
       <WeatherMainInfo
         icon={weatherInfo.data?.weather.icon}
         temperature={weatherInfo.data?.temp}
         description={weatherInfo.data?.weather.description}
-        isLoading={cityInfo.isLoading || weatherInfo.isLoading}
+        isLoading={weatherInfo.isLoading || !weatherInfo.data}
       />
       <WeatherAdditionalInfo
         windSpeed={weatherInfo.data?.wind_speed}
         pressure={weatherInfo.data?.pressure}
         humidity={weatherInfo.data?.humidity}
         direction={weatherInfo.data?.wind_direction}
-        isLoading={cityInfo.isLoading || weatherInfo.isLoading}
+        isLoading={weatherInfo.isLoading || !weatherInfo.data}
       />
     </main>
   );
