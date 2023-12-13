@@ -15,11 +15,11 @@ export const WeatherMainInfo: FC<Props> = ({ icon, temperature, description, isL
       <>
         <span className="flex items-center">
           <img
-            className="w-[150px] h-[150px] md:w-[200px] md:h-[200px]"
+            className="w-[120px] h-[120px] md:w-[200px] md:h-[200px]"
             src={icon}
             alt="weather icon"
           />
-          <span className="text-[100px] md:text-[180px]">{temperature}º</span>
+          <span className="text-[70px] md:text-[180px]">{temperature}º</span>
         </span>
         <span className="text-[18px] md:text-[25px]">{description}</span>
       </>

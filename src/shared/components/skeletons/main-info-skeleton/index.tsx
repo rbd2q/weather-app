@@ -4,7 +4,7 @@ import ContentLoader from 'react-content-loader';
 export const MainInfoSkeleton: FC = () => (
   <ContentLoader
     className="flex justify-center"
-    backgroundColor="#f6f6f6"
+    backgroundColor="#b1c2ee"
     foregroundColor="#498CEC"
     speed={1}
     width="350"

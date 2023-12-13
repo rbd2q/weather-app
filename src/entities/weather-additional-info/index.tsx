@@ -17,7 +17,7 @@ export const WeatherAdditionalInfo: FC<Props> = ({
   direction,
   isLoading
 }) => (
-  <div className="flex gap-2 justify-between flex-wrap">
+  <div className="flex gap-2 justify-between flex-wrap mt-12">
     {!isLoading ? (
       <>
         <div className="flex flex-col basis-[calc(50%-10px)] md:basis-[calc(25%-10px)]">

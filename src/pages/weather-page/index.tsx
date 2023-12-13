@@ -17,7 +17,7 @@ export const WeatherPage = () => {
       setCurrentLatitude(position.coords.latitude);
       setCurrentLongitude(position.coords.longitude);
     });
-  }, [currentLatitude, currentLongitude]);
+  }, []);
 
   const cityInfo = useGetCityInfo(selectedCity, currentLatitude, currentLongitude);
   const weatherInfo = useGetForecast(cityInfo.data?.latitude, cityInfo.data?.longitude, units);
@@ -36,7 +36,7 @@ export const WeatherPage = () => {
   };
 
   return (
-    <main className="flex w-screen h-screen bg-[#498CEC] flex-col justify-between px-10 py-8 text-white md:px-20 md:py-16">
+    <main className="flex min-w-screen min-h-screen bg-[#498CEC] flex-col justify-between px-10 py-8 text-white md:px-20 md:py-16">
       <WeatherControllers
         city={cityInfo.data?.city}
         units={units}

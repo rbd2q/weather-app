@@ -21,6 +21,9 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': 'error',
+    'react/jsx-no-useless-fragment': ['error', {
+      'allowExpressions': true
+    }],
     'simple-import-sort/imports': 'error',
     camelcase: 'off',
     'no-shadow': 'off',
