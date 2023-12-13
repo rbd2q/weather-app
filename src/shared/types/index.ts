@@ -49,6 +49,7 @@ export type NormalizedWeatherData = {
   visibility: number;
   wind_speed: number;
   wind_deg: number;
+  wind_direction: string;
   wind_gust: number;
   weather: {
     id: number;

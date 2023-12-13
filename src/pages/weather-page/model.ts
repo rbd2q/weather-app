@@ -3,6 +3,7 @@ import { useQuery, UseQueryResult } from 'react-query';
 
 import { useApi } from '@/shared/api/useApi';
 import { API_KEY } from '@/shared/constants';
+import { convertDegreesToDirection } from '@/shared/helpers';
 import {
   LocationType,
   NormalizedLocationType,
@@ -15,6 +16,7 @@ const normalizeForecastData = (data: WeatherResponse): NormalizedWeatherData => 
   ...data.current,
   temp: Math.round(data.current.temp),
   wind_speed: Math.round(data.current.wind_speed),
+  wind_direction: convertDegreesToDirection(data.current.wind_deg),
   weather: {
     ...data.current.weather[0],
     description: upperFirst(data.current.weather[0].description),
@@ -34,7 +36,7 @@ export const useGetForecast = (
   units: UnitsType = 'metric'
 ): UseQueryResult<NormalizedWeatherData> => {
   const api = useApi();
-  const part = 'alerts,daily,hourly,minutely';
+  const excludedParts = 'alerts,daily,hourly,minutely';
 
   return useQuery(['current-weather', latitude, longitude, units], async () => {
     try {
@@ -42,7 +44,7 @@ export const useGetForecast = (
         return;
       }
       const { data } = await api.get(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&units=${units}&exclude=${part}&appid=${API_KEY}&lang=ru`
+        `/data/3.0/onecall?lat=${latitude}&lon=${longitude}&units=${units}&exclude=${excludedParts}&appid=${API_KEY}&lang=ru`
       );
       return normalizeForecastData(data);
     } catch (error: unknown) {
@@ -61,9 +63,7 @@ export const useGetCityInfo = (
   return useQuery(['current-city', cityName, latitude, longitude], async () => {
     if (cityName) {
       try {
-        const { data } = await api.get(
-          `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`
-        );
+        const { data } = await api.get(`/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`);
         return normalizeCityInfo(data);
       } catch (error: unknown) {
         console.log(error);
@@ -73,7 +73,7 @@ export const useGetCityInfo = (
     if (latitude && longitude) {
       try {
         const { data } = await api.get(
-          `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}&lang=ru`
+          `/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}&lang=ru`
         );
         return normalizeCityInfo(data);
       } catch (error: unknown) {

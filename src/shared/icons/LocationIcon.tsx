@@ -15,8 +15,7 @@ export const LocationIcon: FC<Props> = ({ size = 30 }) => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M22.489 5.83819L5.23895 16.6268L13.728 18.2769L18.2146 25.7637L22.489 5.83819Z"
-      fill="white"
-      fillOpacity="0.4"
+      fill="currentColor"
     />
   </svg>
 );

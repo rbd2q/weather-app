@@ -1,18 +1,14 @@
-import axios, { CreateAxiosDefaults } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
-const config: CreateAxiosDefaults = {
+const config: AxiosRequestConfig = {
+  baseURL: 'https://api.openweathermap.org',
   headers: {
     Accept: 'application/json'
   }
 };
 
 export const useApi = () => {
-  const actualConfig = {
-    ...config,
-    headers: {
-      ...config.headers
-    }
-  };
+  const actualConfig = { ...config, headers: { ...config.headers } };
 
   return axios.create(actualConfig);
 };

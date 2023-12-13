@@ -1,0 +1,1 @@
+export { convertDegreesToDirection } from './convertDegreesToDirection';
