@@ -61,24 +61,19 @@ export const useGetCityInfo = (
   const api = useApi();
 
   return useQuery(['current-city', cityName, latitude, longitude], async () => {
-    if (cityName) {
-      try {
-        const { data } = await api.get(`/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`);
-        return normalizeCityInfo(data);
-      } catch (error: unknown) {
-        console.log(error);
-      }
+    if (!cityName && !longitude && !latitude) {
+      return;
     }
 
-    if (latitude && longitude) {
-      try {
-        const { data } = await api.get(
-          `/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}&lang=ru`
-        );
-        return normalizeCityInfo(data);
-      } catch (error: unknown) {
-        console.log(error);
-      }
+    try {
+      const { data } = cityName
+        ? await api.get(`/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`)
+        : await api.get(
+            `/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}&lang=ru`
+          );
+      return normalizeCityInfo(data);
+    } catch (error: unknown) {
+      console.log(error);
     }
   });
 };
