@@ -51,6 +51,7 @@ export type NormalizedWeatherData = {
   wind_deg: number;
   wind_direction: string;
   wind_gust: number;
+  rain_probability: number;
   weather: {
     id: number;
     main: string;

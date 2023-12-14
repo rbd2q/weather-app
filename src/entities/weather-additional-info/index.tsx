@@ -7,6 +7,7 @@ interface Props {
   windDirection: string | undefined;
   pressure: number | undefined;
   humidity: number | undefined;
+  rainProbability: number | undefined;
   isLoading: boolean;
 }
 
@@ -15,6 +16,7 @@ export const WeatherAdditionalInfo: FC<Props> = ({
   windDirection,
   pressure,
   humidity,
+  rainProbability,
   isLoading
 }) => (
   <div className="flex gap-2 justify-between flex-wrap mt-12">
@@ -36,7 +38,7 @@ export const WeatherAdditionalInfo: FC<Props> = ({
         </div>
         <div className="flex flex-col basis-[calc(50%-8px)] md:basis-[calc(25%-8px)]">
           <span className="opacity-60 md:text-lg">Вероятность дождя</span>
-          <span className="text-lg md:text-2xl mt-10px">10%</span>
+          <span className="text-lg md:text-2xl mt-10px">{rainProbability}%</span>
         </div>
       </>
     ) : (

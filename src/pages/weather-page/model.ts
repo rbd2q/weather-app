@@ -19,6 +19,8 @@ const normalizeForecastData = (data: WeatherResponse): NormalizedWeatherData => 
   temp: Math.round(data.current.temp),
   wind_speed: Math.round(data.current.wind_speed),
   wind_direction: convertDegreesToDirection(data.current.wind_deg),
+  // TODO replace with real data when it is implemented
+  rain_probability: 10,
   weather: {
     ...data.current.weather[0],
     description: upperFirst(data.current.weather[0].description),

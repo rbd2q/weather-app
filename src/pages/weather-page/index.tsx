@@ -62,6 +62,7 @@ export const WeatherPage = () => {
         windDirection={weatherInfo.data?.wind_direction}
         pressure={weatherInfo.data?.pressure}
         humidity={weatherInfo.data?.humidity}
+        rainProbability={weatherInfo.data?.rain_probability}
         isLoading={weatherInfo.isLoading || !weatherInfo.data}
       />
     </main>
