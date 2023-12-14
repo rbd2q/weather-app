@@ -2,6 +2,7 @@ import upperFirst from 'lodash/upperFirst';
 import { useQuery, UseQueryResult } from 'react-query';
 
 import { useApi } from '@/shared/api/useApi';
+import { showErrorToast } from '@/shared/components/toast';
 import { API_KEY } from '@/shared/constants';
 import { convertDegreesToDirection } from '@/shared/helpers';
 import {
@@ -38,7 +39,7 @@ export const useGetForecast = (
   const api = useApi();
   const excludedParts = 'alerts,daily,hourly,minutely';
 
-  return useQuery(['current-weather', latitude, longitude, units], async () => {
+  return useQuery(['city-weather', latitude, longitude, units], async () => {
     try {
       if (!latitude || !longitude) {
         return;
@@ -46,9 +47,11 @@ export const useGetForecast = (
       const { data } = await api.get(
         `/data/3.0/onecall?lat=${latitude}&lon=${longitude}&units=${units}&exclude=${excludedParts}&appid=${API_KEY}&lang=ru`
       );
-      return normalizeForecastData(data);
+      if (data.length) {
+        return normalizeForecastData(data);
+      }
     } catch (error: unknown) {
-      console.log(error);
+      showErrorToast('Что-то пошло не так, перезагрузите страницу');
     }
   });
 };
@@ -60,7 +63,7 @@ export const useGetCityInfo = (
 ): UseQueryResult<NormalizedLocationType> => {
   const api = useApi();
 
-  return useQuery(['current-city', cityName, latitude, longitude], async () => {
+  return useQuery(['city-info', cityName, latitude, longitude], async () => {
     if (!cityName && !longitude && !latitude) {
       return;
     }
@@ -71,9 +74,12 @@ export const useGetCityInfo = (
         : await api.get(
             `/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}&lang=ru`
           );
-      return normalizeCityInfo(data);
+      if (data.length) {
+        return normalizeCityInfo(data);
+      }
     } catch (error: unknown) {
-      console.log(error);
+      localStorage.removeItem('selected-city');
+      showErrorToast('Что-то пошло не так, перезагрузите страницу');
     }
   });
 };

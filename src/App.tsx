@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+import { ToastContainer } from '@/shared/components/toast';
+
 import { WeatherPage } from './pages/weather-page';
 
 const App = () => {
@@ -16,6 +18,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <WeatherPage />
+      <ToastContainer />
     </QueryClientProvider>
   );
 };
