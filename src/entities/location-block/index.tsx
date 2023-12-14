@@ -44,7 +44,7 @@ export const LocationBlock: FC<Props> = ({
             </button>
             <button
               disabled={isLoading}
-              className="flex flex-row-reverse items-center gap-1 opacity-60 hover:opacity-100 md:text-lg sm:flex-row"
+              className="flex flex-row-reverse items-center text-left gap-1 opacity-60 hover:opacity-100 md:text-lg sm:flex-row"
               onClick={handleGetMyLocation}>
               <LocationIcon />
               <span>Мое местоположение</span>

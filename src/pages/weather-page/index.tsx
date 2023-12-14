@@ -7,8 +7,6 @@ import { useGetCityInfo, useGetForecast } from '@/pages/weather-page/model';
 import { UnitsSwitcher } from '@/shared/components/units-switcher';
 import { UnitsType } from '@/shared/types';
 
-// const rainColor = '#2c5b94';
-
 export const WeatherPage = () => {
   const [currentLatitude, setCurrentLatitude] = useState<number>();
   const [currentLongitude, setCurrentLongitude] = useState<number>();

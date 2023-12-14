@@ -7,8 +7,4 @@ const config: AxiosRequestConfig = {
   }
 };
 
-export const useApi = () => {
-  const actualConfig = { ...config, headers: { ...config.headers } };
-
-  return axios.create(actualConfig);
-};
+export const useApi = () => axios.create(config);
