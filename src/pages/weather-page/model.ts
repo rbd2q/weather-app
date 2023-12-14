@@ -14,6 +14,11 @@ import {
   WeatherResponse
 } from '@/shared/types';
 
+const checkData = <T>(data: T) => {
+  if (!data)
+    throw new AxiosError('Что-то пошло не так при загрузке данных, перезагрузите страницу');
+};
+
 const normalizeForecastData = (data: WeatherResponse): NormalizedWeatherData => ({
   ...data.current,
   temp: Math.round(data.current.temp),
@@ -50,9 +55,7 @@ export const useGetForecast = (
       const { data } = await api.get(
         `/data/3.0/onecall?lat=${latitude}&lon=${longitude}&units=${units}&exclude=${excludedParts}&appid=${API_KEY}&lang=ru`
       );
-      if (!data) {
-        throw new AxiosError('Что-то пошло не так, перезагрузите страницу');
-      }
+      checkData(data);
       return normalizeForecastData(data);
     } catch (error: unknown) {
       showErrorToast(error.message ?? 'Что-то пошло не так');
@@ -78,9 +81,7 @@ export const useGetCityInfo = (
         : await api.get(
             `/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}&lang=ru`
           );
-      if (!data.length) {
-        throw new AxiosError('Что-то пошло не так, перезагрузите страницу');
-      }
+      checkData(data.length);
       return normalizeCityInfo(data);
     } catch (error: unknown) {
       localStorage.removeItem('selected-city');
