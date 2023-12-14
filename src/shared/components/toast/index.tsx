@@ -7,6 +7,7 @@ export const ToastContainer: FC = () => (
     position="top-center"
     autoClose={5000}
     theme="light"
+    limit={1}
     closeOnClick
   />
 );

@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import upperFirst from 'lodash/upperFirst';
 import { useQuery, UseQueryResult } from 'react-query';
 
@@ -47,11 +48,12 @@ export const useGetForecast = (
       const { data } = await api.get(
         `/data/3.0/onecall?lat=${latitude}&lon=${longitude}&units=${units}&exclude=${excludedParts}&appid=${API_KEY}&lang=ru`
       );
-      if (data.length) {
-        return normalizeForecastData(data);
+      if (!data) {
+        throw new AxiosError('Что-то пошло не так, перезагрузите страницу');
       }
+      return normalizeForecastData(data);
     } catch (error: unknown) {
-      showErrorToast('Что-то пошло не так, перезагрузите страницу');
+      showErrorToast(error.message ?? 'Что-то пошло не так');
     }
   });
 };
@@ -74,12 +76,15 @@ export const useGetCityInfo = (
         : await api.get(
             `/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${API_KEY}&lang=ru`
           );
-      if (data.length) {
-        return normalizeCityInfo(data);
+      if (!data.length) {
+        throw new AxiosError('Что-то пошло не так, перезагрузите страницу');
       }
+      return normalizeCityInfo(data);
     } catch (error: unknown) {
       localStorage.removeItem('selected-city');
-      showErrorToast('Что-то пошло не так, перезагрузите страницу');
+      if (error instanceof AxiosError) {
+        showErrorToast(error.message ?? 'Что-то пошло не так');
+      }
     }
   });
 };
