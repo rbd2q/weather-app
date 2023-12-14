@@ -19,9 +19,9 @@ export const WeatherMainInfo: FC<Props> = ({ icon, temperature, description, isL
             src={icon}
             alt="weather icon"
           />
-          <span className="text-[70px] md:text-[180px]">{temperature}º</span>
+          <span className="text-7xl md:text-[180px]">{temperature}º</span>
         </span>
-        <span className="text-[18px] md:text-[25px]">{description}</span>
+        <span className="text-lg md:text-2xl">{description}</span>
       </>
     ) : (
       <MainInfoSkeleton />

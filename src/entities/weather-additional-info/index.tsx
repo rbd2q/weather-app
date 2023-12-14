@@ -4,37 +4,37 @@ import { AdditionalInfoSkeleton } from '@/shared/components/skeletons/additional
 
 interface Props {
   windSpeed: number | undefined;
+  windDirection: string | undefined;
   pressure: number | undefined;
   humidity: number | undefined;
-  direction: string | undefined;
   isLoading: boolean;
 }
 
 export const WeatherAdditionalInfo: FC<Props> = ({
   windSpeed,
+  windDirection,
   pressure,
   humidity,
-  direction,
   isLoading
 }) => (
   <div className="flex gap-2 justify-between flex-wrap mt-12">
     {!isLoading ? (
       <>
-        <div className="flex flex-col basis-[calc(50%-10px)] md:basis-[calc(25%-10px)]">
+        <div className="flex flex-col basis-[calc(50%-8px)] md:basis-[calc(25%-8px)]">
           <span className="opacity-60 md:text-lg">Ветер</span>
           <span className="text-lg md:text-2xl mt-10px">
-            {windSpeed} м/c, {direction}
+            {windSpeed} м/c, {windDirection}
           </span>
         </div>
-        <div className="flex flex-col basis-[calc(50%-10px)] md:basis-[calc(25%-10px)]">
+        <div className="flex flex-col basis-[calc(50%-8px)] md:basis-[calc(25%-8px)]">
           <span className="opacity-60 md:text-lg">Давление</span>
           <span className="text-lg md:text-2xl mt-10px">{pressure} мм рт. ст.</span>
         </div>
-        <div className="flex flex-col basis-[calc(50%-10px)] md:basis-[calc(25%-10px)]">
+        <div className="flex flex-col basis-[calc(50%-8px)] md:basis-[calc(25%-8px)]">
           <span className="opacity-60 md:text-lg">Влажность</span>
           <span className="text-lg md:text-2xl mt-10px">{humidity}%</span>
         </div>
-        <div className="flex flex-col basis-[calc(50%-10px)] md:basis-[calc(25%-10px)]">
+        <div className="flex flex-col basis-[calc(50%-8px)] md:basis-[calc(25%-8px)]">
           <span className="opacity-60 md:text-lg">Вероятность дождя</span>
           <span className="text-lg md:text-2xl mt-10px">10%</span>
         </div>

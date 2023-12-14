@@ -6,14 +6,14 @@ import { LocationIcon } from '@/shared/icons/LocationIcon';
 
 interface Props {
   city: string | undefined;
-  onFormSubmit: (city: string) => void;
+  handleChangeCity: (city: string) => void;
   handleGetMyLocation: () => void;
   isLoading: boolean;
 }
 
 export const LocationBlock: FC<Props> = ({
   city,
-  onFormSubmit,
+  handleChangeCity,
   handleGetMyLocation,
   isLoading
 }) => {
@@ -21,7 +21,7 @@ export const LocationBlock: FC<Props> = ({
 
   const onSubmit = (value: string) => {
     setIsInputVisible(false);
-    onFormSubmit(value);
+    handleChangeCity(value);
   };
 
   return (
@@ -31,7 +31,7 @@ export const LocationBlock: FC<Props> = ({
       ) : (
         <div className="flex flex-col">
           {!isLoading && city ? (
-            <span className="text-[32px] md:text-[50px]">{city}</span>
+            <span className="text-3xl md:text-text-5xl">{city}</span>
           ) : (
             <CitySkeleton />
           )}

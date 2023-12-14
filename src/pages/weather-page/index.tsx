@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
+import { LocationBlock } from '@/entities/location-block';
 import { WeatherAdditionalInfo } from '@/entities/weather-additional-info';
 import { WeatherMainInfo } from '@/entities/weather-main-info';
 import { useGetCityInfo, useGetForecast } from '@/pages/weather-page/model';
+import { UnitsSwitcher } from '@/shared/components/units-switcher';
 import { UnitsType } from '@/shared/types';
-import { WeatherControllers } from '@/widgets/weather-controllers';
 
 // const rainColor = '#2c5b94';
 
@@ -39,14 +40,19 @@ export const WeatherPage = () => {
 
   return (
     <main className="flex min-w-screen min-h-screen bg-[#498CEC] flex-col justify-between px-10 py-8 text-white md:px-20 md:py-16">
-      <WeatherControllers
-        city={cityInfo.data?.city}
-        units={units}
-        onChangeUnits={handleChangeUnits}
-        onFormSubmit={handleChangeCity}
-        handleGetMyLocation={handleShowMyLocation}
-        isLoading={cityInfo.isLoading}
-      />
+      <div className="flex justify-between items-start md:items-center">
+        <LocationBlock
+          city={cityInfo.data?.city}
+          handleChangeCity={handleChangeCity}
+          handleGetMyLocation={handleShowMyLocation}
+          isLoading={cityInfo.isLoading}
+        />
+        <UnitsSwitcher
+          activeUnits={units}
+          onChangeUnits={handleChangeUnits}
+          isLoading={cityInfo.isLoading}
+        />
+      </div>
       <WeatherMainInfo
         icon={weatherInfo.data?.weather.icon}
         temperature={weatherInfo.data?.temp}
@@ -55,9 +61,9 @@ export const WeatherPage = () => {
       />
       <WeatherAdditionalInfo
         windSpeed={weatherInfo.data?.wind_speed}
+        windDirection={weatherInfo.data?.wind_direction}
         pressure={weatherInfo.data?.pressure}
         humidity={weatherInfo.data?.humidity}
-        direction={weatherInfo.data?.wind_direction}
         isLoading={weatherInfo.isLoading || !weatherInfo.data}
       />
     </main>
